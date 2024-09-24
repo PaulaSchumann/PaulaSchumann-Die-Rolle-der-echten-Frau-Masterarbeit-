@@ -1,0 +1,13 @@
+objekterkennung Feminism
+
+
+person: 2877
+cup: 277
+potted plant: 181
+bowl: 172
+book: 161
+chair: 144
+dining table: 122
+bottle: 120
+vase: 116
+tie: 115

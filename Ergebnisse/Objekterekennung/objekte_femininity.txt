@@ -1,0 +1,10 @@
+person: 4530
+cup: 422
+potted plant: 404
+bowl: 399
+bottle: 370
+vase: 362
+chair: 261
+book: 239
+tie: 190
+apple: 183

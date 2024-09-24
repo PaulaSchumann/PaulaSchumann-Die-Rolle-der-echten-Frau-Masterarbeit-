@@ -1,0 +1,10 @@
+person: 123602
+cup: 12292
+chair: 12052
+bottle: 11537
+book: 10494
+bowl: 10278
+potted plant: 10108
+vase: 9209
+donut: 5514
+dining table: 5429
