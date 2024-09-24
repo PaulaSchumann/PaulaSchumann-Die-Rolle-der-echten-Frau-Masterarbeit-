@@ -1,0 +1,12 @@
+Vader Sentiment-Analyse Ergebnisse (einzeln):
+Positive Captions: 116722
+Neutrale Captions: 190104
+Negative Captions: 26287
+
+TextBlob Sentiment-Analyse Ergebnisse (einzeln):
+Positive Captions: 110538
+Neutrale Captions: 196423
+Negative Captions: 26152
+
+Durchschnittlicher Vader Sentimentscore (gesamt): 0.18199315577596464
+Durchschnittlicher TextBlob Sentimentscore (gesamt): 0.09754312526284574
