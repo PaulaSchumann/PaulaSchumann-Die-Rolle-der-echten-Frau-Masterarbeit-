@@ -1,4 +1,5 @@
-# PaulaSchumann-Die-Rolle-der-echten-Frau-Masterarbeit-
+# Masterarbeit 'Die Rolle der "echten Frau" Masterarbeit: Wie rechte Instagrammerinnen eine anti-feministische Identität erzählen'
+
 Repository zur Masterarbeit 'Die Rolle der „echten Frau“: Wie rechte  Instagrammerinnen eine anti-feministische  Identität erzählen'
 
 
@@ -9,7 +10,7 @@ Aufbau des Ornders:
 
 /Python_Skripte - die Python-Skripte, mit denen die Analysen durchgeführt wurden
 
-	/Datensätze_teilen_Bilder.py - Kopieren der Bilder in neuen Ordner, wenn gesuchter Begriff in der Cpation ist *
+	/Datensätze_teilen_Bilder.py - Kopieren der Bilder in neuen Ordner, wenn gesuchter Begriff in der Cpation ist *1
 
 	/Datensätze_teilen_Captions.py - Kopieren der txt-files in einen neuen Ordner, wenn der gesuchte Begriff in der Caption ist
 
@@ -89,12 +90,16 @@ Hinweis: Einige Skripte können längere Laufzeiten haben, besonders bei großen
 
 Anmerkung zu den Skripten:
 
-* für das Schreiben des Codes, der die Cpations mit den dazugehörigen Bildern anhand des Timecodes im Titel erkennt, wurde ChatGPT genutzt
+*1 für das Schreiben des Codes, der die Cpations mit den dazugehörigen Bildern anhand des Timecodes im Titel erkennt, wurde ChatGPT genutzt
+  
 ** hier wurde mit ChatGPT Teile des Codes generiert der Farbwerte ausschließt und Ränder erkennt und ausschließt
-*** Da der Vorgang mit Instaloader immer wieder wegen der Rate Limits abgebrochen wurde, wurden Teile des Datensatzes auch über das Terminal gesprapt. Dafür wurde dieser Code verwendet:  instaloader --no-videos --post-metadata-txt="caption" abiding_home 
+
+*** Da der Vorgang mit Instaloader immer wieder wegen der Rate Limits abgebrochen wurde, wurden Teile des Datensatzes auch über das Terminal 
+gesprapt. Dafür wurde dieser Code verwendet:  instaloader --no-videos --post-metadata-txt="caption" abiding_home 
+
 **** Der hier verwendete Code basiert auf dieser Seite https://www.nltk.org/book_1ed/ch02.html
+
 ***** Für die Objekterkennung wurde Yolov5 verwendet https://github.com/ultralytics/yolov5
+
 ****** Das Topic Modelling wurde mit zufälligen Seeds durchgeführt, um variable, leicht unterschiedliche Ergebnisse zu erzielen und so eine bessere Exploration der Ergebnisse zu ermöglichen
 
-
-Der Ordner Stick_Software enthät bereits vor Kauf bestehende Dateien um den Stick zu modifizieren. Er ist unabhängig von dieser Arbeit
