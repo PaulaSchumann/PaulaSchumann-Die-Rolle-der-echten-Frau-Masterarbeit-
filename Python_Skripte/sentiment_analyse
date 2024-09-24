@@ -1,0 +1,126 @@
+import os
+from textblob import TextBlob
+from nltk.sentiment import SentimentIntensityAnalyzer
+import nltk
+import matplotlib.pyplot as plt
+
+# Download der notwendigen NLTK-Daten
+nltk.download('vader_lexicon')
+
+# Vader Sentiment Analyzer initialisieren
+sia = SentimentIntensityAnalyzer()
+
+# Funktion zum Laden der Captions aus einem Verzeichnis
+def load_captions_from_folder(folder_path):
+    captions = []
+    for root, _, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith(".txt"):
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r', encoding='utf-8') as f:
+                        for line in f:
+                            caption = line.strip()
+                            if caption:
+                                captions.append(caption)
+                except Exception as e:
+                    print(f"Fehler beim Verarbeiten der Datei {file_path}: {e}")
+    return captions
+
+# Funktion zur Durchführung der Sentiment-Analyse mit Vader und TextBlob
+def analyze_sentiments(captions):
+    vader_results = {'positive': 0, 'neutral': 0, 'negative': 0}
+    textblob_results = {'positive': 0, 'neutral': 0, 'negative': 0}
+    total_vader_score = 0
+    total_textblob_score = 0
+
+    for caption in captions:
+        # Vader Sentiment Analyse
+        vader_score = sia.polarity_scores(caption)
+        total_vader_score += vader_score['compound']
+        if vader_score['compound'] >= 0.05:
+            vader_results['positive'] += 1
+        elif vader_score['compound'] <= -0.05:
+            vader_results['negative'] += 1
+        else:
+            vader_results['neutral'] += 1
+
+        # TextBlob Sentiment Analyse
+        blob = TextBlob(caption)
+        textblob_score = blob.sentiment.polarity
+        total_textblob_score += textblob_score
+        if textblob_score > 0:
+            textblob_results['positive'] += 1
+        elif textblob_score < 0:
+            textblob_results['negative'] += 1
+        else:
+            textblob_results['neutral'] += 1
+
+    average_vader_score = total_vader_score / len(captions)
+    average_textblob_score = total_textblob_score / len(captions)
+
+    return vader_results, textblob_results, average_vader_score, average_textblob_score
+
+# Funktion zum Erstellen der Visualisierungen
+def create_visualizations(vader_results, textblob_results, avg_vader_score, avg_textblob_score):
+    # Durchgehend dieselbe Farbpalette
+    common_colors = ['#9dcf48', '#259dd9', '#d13843']  # Farben für positiv, neutral, negativ
+
+    # Vader Kreisdiagramm
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.pie(vader_results.values(), labels=vader_results.keys(), autopct='%1.1f%%', startangle=90, colors=common_colors)
+    ax.set_title('Vader Sentiment-Verteilung Femininity', fontsize=16, fontweight='bold')
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.show()
+
+    # TextBlob Kreisdiagramm
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.pie(textblob_results.values(), labels=textblob_results.keys(), autopct='%1.1f%%', startangle=90, colors=common_colors)
+    ax.set_title('TextBlob Sentiment-Verteilung Femininity', fontsize=16, fontweight='bold')
+    plt.axis('equal')
+    plt.show()
+
+    # Balkendiagramm für durchschnittliche Sentimentscores
+    fig, ax = plt.subplots(figsize=(10, 6))
+    scores = [avg_vader_score, avg_textblob_score]
+    bar_labels = ['Vader', 'TextBlob']
+    bars = ax.bar(bar_labels, scores, color=['#66c2a5', '#fc8d62'])  # Positive und neutrale Farben für die Balken
+
+    ax.set_ylabel('Durchschnittlicher Sentimentscore', fontsize=14)
+    ax.set_title('Vergleich der durchschnittlichen Sentimentscores Femininity', fontsize=16, fontweight='bold')
+
+    # Werte auf den Balken anzeigen
+    for bar in bars:
+        height = bar.get_height()
+        ax.text(bar.get_x() + bar.get_width() / 2.0, height, f'{height:.3f}', ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+    plt.tight_layout()
+    plt.show()
+
+# Hauptprogramm
+folder_path = "E:/Datensätze/feminism_posts"
+captions = load_captions_from_folder(folder_path)
+
+if captions:
+    # Durchführung der Sentiment-Analyse
+    vader_results, textblob_results, avg_vader_score, avg_textblob_score = analyze_sentiments(captions)
+
+    # Ergebnisse anzeigen
+    print("\nVader Sentiment-Analyse Ergebnisse (einzeln):")
+    print(f"Positive Captions: {vader_results['positive']}")
+    print(f"Neutrale Captions: {vader_results['neutral']}")
+    print(f"Negative Captions: {vader_results['negative']}")
+
+    print("\nTextBlob Sentiment-Analyse Ergebnisse (einzeln):")
+    print(f"Positive Captions: {textblob_results['positive']}")
+    print(f"Neutrale Captions: {textblob_results['neutral']}")
+    print(f"Negative Captions: {textblob_results['negative']}")
+
+    # Durchschnittliche Sentimentscores anzeigen
+    print("\nDurchschnittlicher Vader Sentimentscore (gesamt):", avg_vader_score)
+    print("Durchschnittlicher TextBlob Sentimentscore (gesamt):", avg_textblob_score)
+
+    # Visualisierungen erstellen
+    create_visualizations(vader_results, textblob_results, avg_vader_score, avg_textblob_score)
+else:
+    print("Keine Captions gefunden.")
